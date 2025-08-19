@@ -1,28 +1,39 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class GbTheFatBoy {
 
     public static final String NAME = "GbTheFatBoy";
     public static final String MESSAGE = "I'm smelly meow meow!";
     public static final String LINE = "_".repeat(60);
-    public static final ArrayList<String> taskList = new ArrayList<String>();
 
     public static void main(String[] args) {
         greet();
+        TaskList taskList = new TaskList();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String command = scanner.nextLine();
-            if (command.equals("bye")) break;
-            else if (command.equals("list")) printList(taskList);
-            else {
-                taskList.add(command);
-                echo(command);
+            String description = scanner.nextLine();
+            if (description.equals("bye")) break;
+            else if (description.equals("list")) taskList.print();
+            else if (description.startsWith("mark")) {
+                String[] parts = description.split(" ");
+                String command = parts[0];
+                int index = Integer.parseInt(parts[1]);
+                if (command.equalsIgnoreCase("mark") && index >= 1) {
+                    taskList.mark(index);
+                }
+            } else if (description.startsWith("unmark")) {
+                String[] parts = description.split(" ");
+                String command = parts[0];
+                int index = Integer.parseInt(parts[1]);
+                if (command.equalsIgnoreCase("unmark") && index >= 1) {
+                    taskList.unmark(index);
+                }
+            } else {
+                taskList.add(new Task(description));
             }
         }
         bye();
-
     }
 
     public static void greet() {
@@ -31,12 +42,7 @@ public class GbTheFatBoy {
         System.out.println(MESSAGE);
         System.out.println("What can I do for you?");
         System.out.println(LINE);
-    }
-
-    public static void echo(String command) {
-        System.out.println(LINE);
-        System.out.println("added: " + command);
-        System.out.println(LINE);
+        System.out.println();
     }
 
     public static void bye() {
@@ -45,12 +51,4 @@ public class GbTheFatBoy {
         System.out.println(LINE);
     }
 
-    public static void printList(ArrayList<String> taskList) {
-        System.out.println(LINE);
-        int length = taskList.size();
-        for (int i = 0; i < length; i++) {
-            System.out.println((i+1) + ". " + taskList.get(i));
-        }
-        System.out.println(LINE);
-    }
 }
