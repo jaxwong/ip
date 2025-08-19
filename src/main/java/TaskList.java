@@ -7,7 +7,10 @@ public class TaskList {
     public void add(Task task) {
         System.out.println(GbTheFatBoy.LINE);
         this.taskList.add(task);
-        System.out.println("added: "+ task.getDescription());
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println(String.format("Now you have %d tasks in the list.",
+                taskList.size()));
         System.out.println(GbTheFatBoy.LINE);
         System.out.println();
     }
