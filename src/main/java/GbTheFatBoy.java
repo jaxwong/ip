@@ -64,9 +64,12 @@ public class GbTheFatBoy {
                     }
                     case UNMARK -> {
                         int index = Integer.parseInt(parts[1]);
-                        if (index >= 1) {
-                            taskList.unmark(index);
-                        }
+                        taskList.unmark(index);
+
+                    }
+                    case DELETE -> {
+                        int index = Integer.parseInt(parts[1]);
+                        taskList.delete(index);
                     }
                     case BYE -> {
                         bye();

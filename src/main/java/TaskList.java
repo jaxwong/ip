@@ -65,4 +65,20 @@ public class TaskList {
         System.out.println(GbTheFatBoy.LINE);
     }
 
+    public void delete(int index) {
+        System.out.println(GbTheFatBoy.LINE);
+        try {
+            Task removed = this.taskList.remove(index - 1);
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(removed);
+            System.out.println("Now you have " + this.taskList.size() + " tasks in the " +
+                    "list.");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid index!");
+            if (this.taskList.isEmpty()) System.out.println("There are no tasks in your" +
+                    " list!");
+            else System.out.println("Please enter a number from 1 to " + this.taskList.size() + " to delete");
+        }
+    }
+
 }

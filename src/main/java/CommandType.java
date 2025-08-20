@@ -5,6 +5,7 @@ public enum CommandType {
     LIST,
     MARK,
     UNMARK,
+    DELETE,
     BYE;
 
     public static CommandType fromString(String input) {
@@ -15,6 +16,7 @@ public enum CommandType {
             case "list" -> LIST;
             case "mark" -> MARK;
             case "unmark" -> UNMARK;
+            case "delete" -> DELETE;
             case "bye" -> BYE;
             default -> throw new IllegalArgumentException("Unknown command " + input);
         };
