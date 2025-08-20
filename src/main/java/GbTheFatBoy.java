@@ -24,12 +24,31 @@ public class GbTheFatBoy {
                         taskList.add(todo);
                     }
                     case DEADLINE -> {
+                        if (!rem.contains(" /by ")) {
+                            System.out.println("Input deadline in below format:");
+                            System.out.println("deadline <task> /by <deadline>");
+                            System.out.println("deadline return book /by Sunday");
+                            continue;
+                        }
                         String[] deadlineParts = rem.split(" /by ", 2);
+                        if (deadlineParts[0].isEmpty() || deadlineParts[1].isEmpty() ) {
+                            System.out.println("Start and end deadlines cannot be " +
+                                    "empty!");
+                            continue;
+                        }
                         Deadline deadline = new Deadline(deadlineParts[0],
                                 deadlineParts[1]);
                         taskList.add(deadline);
                     }
                     case EVENT -> {
+                        if (!rem.contains(" /from ") || !rem.contains(" /to ")) {
+                            System.out.println("Input event in the below format:");
+                            System.out.println("event <event name> /from <start time> " +
+                                    "/to <end time>");
+                            System.out.println("e.g. event project meeting /from Mon " +
+                                    "2pm /to 4pm");
+                            continue;
+                        }
                         String[] eventParts = rem.split(" /from ", 2);
                         String desc = eventParts[0];
                         String[] eventDates = eventParts[1].split(" /to ", 2);
@@ -41,9 +60,7 @@ public class GbTheFatBoy {
                     case LIST -> taskList.print();
                     case MARK -> {
                         int index = Integer.parseInt(parts[1]);
-                        if (index >= 1) {
-                            taskList.mark(index);
-                        }
+                        taskList.mark(index);
                     }
                     case UNMARK -> {
                         int index = Integer.parseInt(parts[1]);
@@ -61,27 +78,8 @@ public class GbTheFatBoy {
                 System.out.println("Valid commands: todo, deadline, event, list, mark, " +
                         "unmark, bye");
             }
-//            if (description.equals("bye")) break;
-//            else if (description.equals("list")) taskList.print();
-//            else if (description.startsWith("mark")) {
-//                String[] parts = description.split(" ");
-//                String command = parts[0];
-//                int index = Integer.parseInt(parts[1]);
-//                if (command.equalsIgnoreCase("mark") && index >= 1) {
-//                    taskList.mark(index);
-//                }
-//            } else if (description.startsWith("unmark")) {
-//                String[] parts = description.split(" ");
-//                String command = parts[0];
-//                int index = Integer.parseInt(parts[1]);
-//                if (command.equalsIgnoreCase("unmark") && index >= 1) {
-//                    taskList.unmark(index);
-//                }
-//            } else {
-//                taskList.add(new Task(description));
-//            }
+
         }
-//        bye();
     }
 
     public static void greet() {
