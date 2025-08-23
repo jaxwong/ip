@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class GbTheFatBoy {
 
@@ -12,12 +13,16 @@ public class GbTheFatBoy {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String description = scanner.nextLine();
-            String[] parts = description.split(" ");
+            String input = scanner.nextLine();
+            String[] parts = input.split(" ");
             try {
                 CommandType command = CommandType.fromString(parts[0]);
                 // the remaining string after the command
-                String rem = description.substring(description.indexOf(" ") + 1).trim();
+                String rem = "";
+                int spaceIndex = input.indexOf(" ");
+                if (spaceIndex != -1) {
+                    rem = input.substring(spaceIndex + 1).trim();
+                }
                 switch (command) {
                     case TODO -> {
                         Todo todo = new Todo(rem);
@@ -27,12 +32,12 @@ public class GbTheFatBoy {
                         if (!rem.contains(" /by ")) {
                             System.out.println("Input deadline in below format:");
                             System.out.println("deadline <task> /by <deadline>");
-                            System.out.println("deadline return book /by Sunday");
+                            System.out.println("e.g. deadline return book /by Sunday");
                             continue;
                         }
                         String[] deadlineParts = rem.split(" /by ", 2);
                         if (deadlineParts[0].isEmpty() || deadlineParts[1].isEmpty() ) {
-                            System.out.println("Start and end deadlines cannot be " +
+                            System.out.println("Description/deadline cannot be " +
                                     "empty!");
                             continue;
                         }
@@ -79,7 +84,7 @@ public class GbTheFatBoy {
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid command");
                 System.out.println("Valid commands: todo, deadline, event, list, mark, " +
-                        "unmark, bye");
+                        "unmark, delete, bye");
             }
 
         }
