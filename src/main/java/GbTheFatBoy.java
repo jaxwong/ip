@@ -6,10 +6,12 @@ public class GbTheFatBoy {
     public static final String NAME = "GbTheFatBoy";
     public static final String MESSAGE = "I'm smelly meow meow!";
     public static final String LINE = "_".repeat(60);
+    private static final String DATA_FILE_PATH = "./data/GBot.txt";
 
     public static void main(String[] args) {
         greet();
-        TaskList taskList = new TaskList();
+        Storage storage = new Storage(DATA_FILE_PATH);
+        TaskList taskList = new TaskList(storage);
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
