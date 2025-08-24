@@ -2,6 +2,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Storage {
@@ -66,11 +68,12 @@ public class Storage {
         } else if (task instanceof Deadline) {
             Deadline deadline = (Deadline) task;
             return String.format("D | %s | %s | %s", isDone, deadline.getDescription(),
-                    deadline.getDate());
+                    deadline.getDeadlineForStorage());
         } else if (task instanceof Event) {
             Event event = (Event) task;
             return String.format("E | %s | %s | %s | %s", isDone,
-                    event.getDescription(), event.getStartDate(), event.getEndDate());
+                    event.getDescription(), event.getStartDateTimeForStorage(),
+                    event.getEndDateTimeForStorage());
         }
 
         return "";
@@ -78,6 +81,7 @@ public class Storage {
 
     private Task parseTask(String line) {
         try {
+            if (line.isEmpty()) return null;
             String[] parts = line.split(" \\| ");
 
             if (parts.length < 3) {
@@ -98,15 +102,30 @@ public class Storage {
                     break;
                 case "D":
                     if (parts.length == 4) {
-                        String date = parts[3].trim();
-                        task = new Deadline(description, isDone, date);
+                        String dateTimeStr = parts[3].trim();
+                        try {
+                            LocalDateTime deadline = LocalDateTime.parse(dateTimeStr,
+                                    DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                            task = new Deadline(description, isDone, deadline);
+                        } catch (Exception e) {
+                            System.err.println("Error parsing deadline date: " + dateTimeStr);
+                            return null;
+                        }
                     }
                     break;
                 case "E":
                     if (parts.length == 5) {
-                        String startDate = parts[3].trim();
-                        String endDate = parts[4].trim();
-                        task = new Event(description, isDone, startDate, endDate);
+                        String startDateStr = parts[3].trim();
+                        String endDateStr = parts[4].trim();
+                        try {
+                            LocalDateTime startDateTime = LocalDateTime.parse(startDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                            LocalDateTime endDateTime = LocalDateTime.parse(endDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                            task = new Event(description, isDone, startDateTime,
+                                    endDateTime);
+                        } catch (Exception e) {
+                            System.err.println("Error parsing event dates: " + startDateStr + ", " + endDateStr);
+                            return null;
+                        }
                     }
                     break;
                 default:
