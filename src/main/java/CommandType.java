@@ -6,6 +6,7 @@ public enum CommandType {
     MARK,
     UNMARK,
     DELETE,
+    FIND_DATE,
     BYE;
 
     public static CommandType fromString(String input) {
@@ -17,6 +18,7 @@ public enum CommandType {
             case "mark" -> MARK;
             case "unmark" -> UNMARK;
             case "delete" -> DELETE;
+            case "find-date" -> FIND_DATE;
             case "bye" -> BYE;
             default -> throw new IllegalArgumentException("Unknown command " + input);
         };
