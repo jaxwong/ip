@@ -26,7 +26,7 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> loadTasks() {
+    public ArrayList<Task> loadTasks() throws GBException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
 
@@ -43,20 +43,20 @@ public class Storage {
             }
             System.out.println("Loaded " + tasks.size() + " tasks from storage");
         } catch (IOException e) {
-            System.err.println("Error reading from file: " + e.getMessage());
+            throw new GBException("Error reading from file: " + e.getMessage());
         }
 
         return tasks;
     }
 
-    public void saveTasks(ArrayList<Task> tasks) {
+    public void saveTasks(ArrayList<Task> tasks) throws GBException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
             for (Task task: tasks) {
                 writer.write(formatTask(task));
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            throw new GBException("Error writing to file: " + e.getMessage());
         }
     }
 
