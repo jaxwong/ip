@@ -82,7 +82,9 @@ public class Parser {
 
     // parseTaskIndex(String arguments)
     public static int parseTaskIndex(String arguments) throws GBException {
-        if (arguments.trim().isEmpty()) throw new GBException("Index cannot be empty!");
+        if (arguments.trim().isEmpty()) {
+            throw new GBException("Index cannot be empty!");
+        }
 
         try {
             return Integer.parseInt(arguments.trim());

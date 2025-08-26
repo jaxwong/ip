@@ -61,7 +61,9 @@ public class TaskList {
         for (Task task : taskList) {
             if (task instanceof Deadline) {
                 Deadline deadline = (Deadline) task;
-                if (deadline.getDeadline().toLocalDate().equals(targetDate)) tasksOnDate.add(deadline);
+                if (deadline.getDeadline().toLocalDate().equals(targetDate)) {
+                    tasksOnDate.add(deadline);
+                }
             } else if (task instanceof Event) {
                 Event event = (Event) task;
                 LocalDate eventStartDate = event.getStartDateTime().toLocalDate();
