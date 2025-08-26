@@ -1,0 +1,4 @@
+T | 0 | borrow book
+T | 1 | eat dinner
+D | 0 | finish ip | Sunday
+E | 0 | meet bubs mom | 7 Sep 1pm | 3pm

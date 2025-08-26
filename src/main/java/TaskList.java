@@ -3,6 +3,12 @@ import java.util.ArrayList;
 public class TaskList {
 
     private ArrayList<Task> taskList = new ArrayList<>();
+    private final Storage storage;
+
+    public TaskList(Storage storage) {
+        this.storage = storage;
+        this.taskList = storage.loadTasks();
+    }
 
     public void add(Task task) {
         System.out.println(GbTheFatBoy.LINE);
@@ -20,6 +26,8 @@ public class TaskList {
                 taskList.size()));
         System.out.println(GbTheFatBoy.LINE);
         System.out.println();
+
+        storage.saveTasks(taskList);
     }
 
     public void print() {
@@ -39,6 +47,8 @@ public class TaskList {
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(this.taskList.get(index - 1));
 
+            storage.saveTasks(taskList);
+
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Invalid index!");
             if (this.taskList.isEmpty()) System.out.println("There are no tasks in your" +
@@ -55,6 +65,8 @@ public class TaskList {
             this.taskList.get(index - 1).unmark();
             System.out.println("Ok, I've marked this task as not done yet:");
             System.out.println(this.taskList.get(index - 1));
+
+            storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Invalid index!");
             if (this.taskList.isEmpty()) System.out.println("There are no tasks in your" +
@@ -73,6 +85,8 @@ public class TaskList {
             System.out.println(removed);
             System.out.println("Now you have " + this.taskList.size() + " tasks in the " +
                     "list.");
+
+            storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Invalid index!");
             if (this.taskList.isEmpty()) System.out.println("There are no tasks in your" +
