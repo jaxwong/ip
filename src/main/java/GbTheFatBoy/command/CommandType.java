@@ -1,3 +1,5 @@
+package GbTheFatBoy.command;
+
 public enum CommandType {
     TODO,
     DEADLINE,
