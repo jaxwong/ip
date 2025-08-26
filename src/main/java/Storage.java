@@ -26,7 +26,7 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> loadTasks() {
+    public ArrayList<Task> loadTasks() throws GBException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
 
@@ -39,24 +39,26 @@ public class Storage {
             String line;
             while ((line = reader.readLine()) != null) {
                 Task task = parseTask(line);
-                if (task != null) tasks.add(task);
+                if (task != null) {
+                    tasks.add(task);
+                }
             }
             System.out.println("Loaded " + tasks.size() + " tasks from storage");
         } catch (IOException e) {
-            System.err.println("Error reading from file: " + e.getMessage());
+            throw new GBException("Error reading from file: " + e.getMessage());
         }
 
         return tasks;
     }
 
-    public void saveTasks(ArrayList<Task> tasks) {
+    public void saveTasks(ArrayList<Task> tasks) throws GBException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
             for (Task task: tasks) {
                 writer.write(formatTask(task));
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            throw new GBException("Error writing to file: " + e.getMessage());
         }
     }
 
@@ -95,42 +97,42 @@ public class Storage {
 
             Task task = null;
             switch(type) {
-                case "T":
-                    if (parts.length == 3) {
-                        task = new Todo(description, isDone);
+            case "T":
+                if (parts.length == 3) {
+                    task = new Todo(description, isDone);
+                }
+                break;
+            case "D":
+                if (parts.length == 4) {
+                    String dateTimeStr = parts[3].trim();
+                    try {
+                        LocalDateTime deadline = LocalDateTime.parse(dateTimeStr,
+                                DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        task = new Deadline(description, isDone, deadline);
+                    } catch (Exception e) {
+                        System.err.println("Error parsing deadline date: " + dateTimeStr);
+                        return null;
                     }
-                    break;
-                case "D":
-                    if (parts.length == 4) {
-                        String dateTimeStr = parts[3].trim();
-                        try {
-                            LocalDateTime deadline = LocalDateTime.parse(dateTimeStr,
-                                    DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                            task = new Deadline(description, isDone, deadline);
-                        } catch (Exception e) {
-                            System.err.println("Error parsing deadline date: " + dateTimeStr);
-                            return null;
-                        }
+                }
+                break;
+            case "E":
+                if (parts.length == 5) {
+                    String startDateStr = parts[3].trim();
+                    String endDateStr = parts[4].trim();
+                    try {
+                        LocalDateTime startDateTime = LocalDateTime.parse(startDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        LocalDateTime endDateTime = LocalDateTime.parse(endDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        task = new Event(description, isDone, startDateTime,
+                                endDateTime);
+                    } catch (Exception e) {
+                        System.err.println("Error parsing event dates: " + startDateStr + ", " + endDateStr);
+                        return null;
                     }
-                    break;
-                case "E":
-                    if (parts.length == 5) {
-                        String startDateStr = parts[3].trim();
-                        String endDateStr = parts[4].trim();
-                        try {
-                            LocalDateTime startDateTime = LocalDateTime.parse(startDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                            LocalDateTime endDateTime = LocalDateTime.parse(endDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                            task = new Event(description, isDone, startDateTime,
-                                    endDateTime);
-                        } catch (Exception e) {
-                            System.err.println("Error parsing event dates: " + startDateStr + ", " + endDateStr);
-                            return null;
-                        }
-                    }
-                    break;
-                default:
-                    System.err.println("Unknown task type: " + type);
-                    return null;
+                }
+                break;
+            default:
+                System.err.println("Unknown task type: " + type);
+                return null;
             }
             return task;
         } catch (Exception e) {
