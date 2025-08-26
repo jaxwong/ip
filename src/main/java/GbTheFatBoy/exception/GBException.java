@@ -1,3 +1,5 @@
+package GbTheFatBoy.exception;
+
 public class GBException extends Exception {
 
     public GBException(String message) {

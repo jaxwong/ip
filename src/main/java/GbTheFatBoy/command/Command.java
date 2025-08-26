@@ -1,3 +1,5 @@
+package GbTheFatBoy.command;
+
 public class Command {
 
     private final CommandType type;

@@ -1,3 +1,5 @@
+package GbTheFatBoy.task;
+
 public class Task {
 
     private final String description;

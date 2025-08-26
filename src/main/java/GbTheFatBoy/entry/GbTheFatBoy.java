@@ -1,3 +1,22 @@
+package GbTheFatBoy.entry;
+
+import GbTheFatBoy.ui.Ui;
+
+import GbTheFatBoy.storage.Storage;
+import GbTheFatBoy.storage.TaskList;
+
+import GbTheFatBoy.command.Command;
+import GbTheFatBoy.command.CommandType;
+
+import GbTheFatBoy.exception.GBException;
+
+import GbTheFatBoy.parser.Parser;
+
+import GbTheFatBoy.task.Task;
+import GbTheFatBoy.task.Todo;
+import GbTheFatBoy.task.Deadline;
+import GbTheFatBoy.task.Event;
+
 import java.time.LocalDate;
 
 public class GbTheFatBoy {

@@ -1,3 +1,12 @@
+package GbTheFatBoy.parser;
+
+import GbTheFatBoy.task.Deadline;
+import GbTheFatBoy.task.Event;
+import GbTheFatBoy.task.Todo;
+import GbTheFatBoy.command.Command;
+import GbTheFatBoy.command.CommandType;
+import GbTheFatBoy.exception.GBException;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
