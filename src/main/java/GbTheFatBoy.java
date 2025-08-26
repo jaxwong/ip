@@ -1,5 +1,7 @@
 import java.util.Scanner;
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class GbTheFatBoy {
 
@@ -33,8 +35,11 @@ public class GbTheFatBoy {
                     case DEADLINE -> {
                         if (!rem.contains(" /by ")) {
                             System.out.println("Input deadline in below format:");
-                            System.out.println("deadline <task> /by <deadline>");
-                            System.out.println("e.g. deadline return book /by Sunday");
+                            System.out.println("deadline <task> /by <date> [time]");
+                            System.out.println("Examples:");
+                            System.out.println("deadline return book /by 2019-12-02");
+                            System.out.println("deadline submit report /by 2/12/2019 1800");
+                            System.out.println("deadline meeting /by 15/10/2019 2:30PM");
                             continue;
                         }
                         String[] deadlineParts = rem.split(" /by ", 2);
@@ -43,26 +48,51 @@ public class GbTheFatBoy {
                                     "empty!");
                             continue;
                         }
-                        Deadline deadline = new Deadline(deadlineParts[0],
-                                deadlineParts[1]);
-                        taskList.add(deadline);
+                        try {
+                            LocalDateTime deadlineDateTime = DateTimeParser.parseDateTime(deadlineParts[1].trim());
+                            Deadline deadline = new Deadline(deadlineParts[0].trim(), deadlineDateTime);
+                            taskList.add(deadline);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Invalid date/time format: " + deadlineParts[1]);
+                            System.out.println("Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy");
+                            System.out.println("Time formats: HHmm, HH:mm, h:mma, ha (optional)");
+                        }
                     }
                     case EVENT -> {
                         if (!rem.contains(" /from ") || !rem.contains(" /to ")) {
                             System.out.println("Input event in the below format:");
-                            System.out.println("event <event name> /from <start time> " +
-                                    "/to <end time>");
-                            System.out.println("e.g. event project meeting /from Mon " +
-                                    "2pm /to 4pm");
+                            System.out.println("event <event name> /from <start date-time> /to <end date-time>");
+                            System.out.println("Examples:");
+                            System.out.println("event project meeting /from 2019-10-15 1400 /to 2019-10-15 1600");
+                            System.out.println("event conference /from 15/10/2019 2:00PM /to 17/10/2019 5:00PM");
                             continue;
                         }
                         String[] eventParts = rem.split(" /from ", 2);
                         String desc = eventParts[0];
                         String[] eventDates = eventParts[1].split(" /to ", 2);
-                        String startDate = eventDates[0];
-                        String endDate = eventDates[1];
-                        Event event = new Event(desc, startDate, endDate);
-                        taskList.add(event);
+                        String startDateStr = eventDates[0].trim();
+                        String endDateStr = eventDates[1].trim();
+                        if (desc.isEmpty() || startDateStr.isEmpty() || endDateStr.isEmpty()) {
+                            System.out.println("Event description and dates cannot be empty!");
+                            continue;
+                        }
+
+                        try {
+                            LocalDateTime startDateTime = DateTimeParser.parseDateTime(startDateStr);
+                            LocalDateTime endDateTime = DateTimeParser.parseDateTime(endDateStr);
+
+                            if (endDateTime.isBefore(startDateTime)) {
+                                System.out.println("End date/time cannot be before start date/time!");
+                                continue;
+                            }
+
+                            Event event = new Event(desc, startDateTime, endDateTime);
+                            taskList.add(event);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Invalid date/time format in event dates.");
+                            System.out.println("Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy");
+                            System.out.println("Time formats: HHmm, HH:mm, h:mma, ha (optional)");
+                        }
                     }
                     case LIST -> taskList.print();
                     case MARK -> {
@@ -78,6 +108,16 @@ public class GbTheFatBoy {
                         int index = Integer.parseInt(parts[1]);
                         taskList.delete(index);
                     }
+                    case FIND_DATE -> {
+                        try {
+                            LocalDate targetDate = DateTimeParser.parseDate(rem);
+                            taskList.findTasksByDate(targetDate);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Invalid date format: " + rem);
+                            System.out.println("Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy");
+                            System.out.println("Example: find-date 2019-12-02");
+                        }
+                    }
                     case BYE -> {
                         bye();
                         return;
@@ -86,7 +126,7 @@ public class GbTheFatBoy {
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid command");
                 System.out.println("Valid commands: todo, deadline, event, list, mark, " +
-                        "unmark, delete, bye");
+                        "unmark, delete, find-date, bye");
             }
 
         }

@@ -1,32 +1,55 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
 
-    private final String startDate;
-    private final String endDate;
+    private final LocalDateTime startDateTime;
+    private final LocalDateTime endDateTime;
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern(
+            "MMM dd yyyy, h:mma");
 
-    public Event(String description, String startDate, String endDate) {
+    public Event(String description, LocalDateTime startDate,
+                 LocalDateTime endDate) {
         super(description);
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDateTime = startDate;
+        this.endDateTime = endDate;
     }
 
-    public Event(String desc, boolean isDone, String startDate, String endDate) {
+    public Event(String desc, boolean isDone, LocalDateTime startDate,
+                 LocalDateTime endDate) {
         super(desc, isDone);
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDateTime = startDate;
+        this.endDateTime = endDate;
     }
 
-    public String getStartDate() {
-        return this.startDate;
+    public LocalDateTime getStartDateTime() {
+        return this.startDateTime;
     }
 
-    public String getEndDate() {
-        return this.endDate;
+    public String getStartDateTimeString() {
+        return this.startDateTime.format(OUTPUT_FORMAT);
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return this.endDateTime;
+    }
+
+    public String getEndDateTimeString() {
+        return this.endDateTime.format(OUTPUT_FORMAT);
+    }
+
+    public String getStartDateTimeForStorage() {
+        return this.startDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    }
+
+    public String getEndDateTimeForStorage() {
+        return this.endDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
     @Override
     public String toString() {
         return String.format("[E]%s (from: %s to: %s)", super.toString(),
-                this.startDate, this.endDate);
+                getStartDateTimeString(), getEndDateTimeString());
     }
 
 }

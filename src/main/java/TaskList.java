@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -93,6 +95,44 @@ public class TaskList {
                     " list!");
             else System.out.println("Please enter a number from 1 to " + this.taskList.size() + " to delete");
         }
+    }
+
+    public void findTasksByDate(LocalDate targetDate) {
+        System.out.println(GbTheFatBoy.LINE);
+        System.out.println("Tasks on " + targetDate.format(DateTimeFormatter.ofPattern(
+                "MMM dd yyyy")) + ":");
+
+        ArrayList<Task> tasksOnDate = new ArrayList<>();
+
+        for (Task task : taskList) {
+            if (task instanceof Deadline) {
+                Deadline deadline = (Deadline) task;
+                if (deadline.getDeadline().toLocalDate().equals(targetDate)) tasksOnDate.add(deadline);
+            } else if (task instanceof Event) {
+                Event event = (Event) task;
+                LocalDate eventStartDate = event.getStartDateTime().toLocalDate();
+                LocalDate eventEndDate = event.getEndDateTime().toLocalDate();
+
+                if (targetDate.equals(eventStartDate)
+                        || targetDate.equals(eventEndDate)
+                        || targetDate.isAfter(eventStartDate) && targetDate.isBefore(eventEndDate)) {
+                    tasksOnDate.add(event);
+                }
+            }
+
+
+        }
+
+        if (tasksOnDate.isEmpty()) {
+            System.out.println("No tasks found on this date");
+        } else {
+            for (int i = 0; i < tasksOnDate.size(); i++) {
+                System.out.println(String.format("%d. %s", (i+1),
+                        tasksOnDate.get(i)));
+            }
+        }
+
+        System.out.println(GbTheFatBoy.LINE);
     }
 
 }
