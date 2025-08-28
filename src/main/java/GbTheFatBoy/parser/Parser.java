@@ -34,7 +34,7 @@ public class Parser {
         try {
             CommandType command = CommandType.fromString(parts[0]);
             String arguments = parts.length > 1 ? parts[1] : " ";
-            return new Command(command, arguments);
+            return new Command(command, arguments.trim());
         } catch (ArrayIndexOutOfBoundsException e) { // arguments
             throw new GBException("Task description cannot be empty");
         }
