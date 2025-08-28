@@ -1,6 +1,7 @@
 package GbTheFatBoy.storage;
 
 import GbTheFatBoy.task.Task;
+import GbTheFatBoy.task.Todo;
 import GbTheFatBoy.task.Deadline;
 import GbTheFatBoy.task.Event;
 
@@ -140,6 +141,30 @@ public class TaskList {
             return new ArrayList<Task>();
         } else {
             return tasksOnDate;
+        }
+
+    }
+
+    /**
+     * Finds and returns all tasks that contain the specific key word
+     *
+     * @param keyword The key to search for in tasks.
+     * @return A list of tasks that contain the specific keyword.
+     */
+    public ArrayList<Task> findTasksByKeyword(String keyword) {
+        ArrayList<Task> tasksWithKey = new ArrayList<>();
+
+        for (Task task : taskList) {
+            if (task.getDescription().contains(keyword)) {
+                tasksWithKey.add(task);
+            }
+        }
+
+        if (tasksWithKey.isEmpty()) {
+            System.out.println("No tasks found on this date");
+            return new ArrayList<Task>();
+        } else {
+            return tasksWithKey;
         }
 
     }
