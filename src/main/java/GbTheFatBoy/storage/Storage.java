@@ -36,6 +36,10 @@ public class Storage {
         createDirectoryIfNotExists();
     }
 
+    /**
+     * Creates a new directory with the specified file path.
+     *
+     */
     private void createDirectoryIfNotExists() {
         try {
             Path path = Paths.get(filePath);
