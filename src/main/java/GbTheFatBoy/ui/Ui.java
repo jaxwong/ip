@@ -170,6 +170,28 @@ public class Ui {
     }
 
     /**
+     * Displays all tasks containing a specific keyword.
+     *
+     * @param tasks The list of tasks occurring on the specified date.
+     * @param key The date to display tasks for.
+     */
+    public void showTasksWithKey(ArrayList<Task> tasks, String key) {
+        System.out.println(LINE);
+        System.out.println("Here are the matching tasks in your list:");
+
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks found on this date.");
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i + 1) + ". " + tasks.get(i));
+            }
+        }
+        System.out.println(LINE);
+    }
+
+
+
+    /**
      * Displays an error message for invalid task indices.
      *
      * @param totalTasks The total number of tasks in the list.

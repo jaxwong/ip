@@ -190,6 +190,10 @@ public class GbTheFatBoy {
                 }
             }
         }
+        case FIND -> {
+            String keyword = command.getArguments();
+            ui.showTasksWithKey(taskList.findTasksByKeyword(keyword), keyword);
+        }
         case BYE -> {
             ui.showGoodbye();
         }
