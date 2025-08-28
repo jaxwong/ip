@@ -13,6 +13,7 @@ public enum CommandType {
     UNMARK,
     DELETE,
     FIND_DATE,
+    FIND,
     BYE;
 
     /**
@@ -33,6 +34,7 @@ public enum CommandType {
             case "unmark" -> UNMARK;
             case "delete" -> DELETE;
             case "find-date" -> FIND_DATE;
+            case "find" -> FIND;
             case "bye" -> BYE;
             default -> throw new IllegalArgumentException("Unknown command " + input);
         };
