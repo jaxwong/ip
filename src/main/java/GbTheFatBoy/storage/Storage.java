@@ -18,9 +18,19 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
+/**
+ * Handles file-based storage and retrieval of tasks.
+ * Manages reading from and writing to a persistent storage file.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Creates a new Storage instance with the specified file path.
+     * Creates the directory structure if it doesn't exist.
+     *
+     * @param filePath The file path where tasks will be stored.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
         createDirectoryIfNotExists();
@@ -38,6 +48,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * If the file doesn't exist, returns an empty task list.
+     *
+     * @return An ArrayList containing all loaded tasks.
+     * @throws GBException If there's an error reading from the file.
+     */
     public ArrayList<Task> loadTasks() throws GBException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -63,6 +80,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the provided list of tasks to the storage file.
+     * Overwrites the existing file content.
+     *
+     * @param tasks The list of tasks to save.
+     * @throws GBException If there's an error writing to the file.
+     */
     public void saveTasks(ArrayList<Task> tasks) throws GBException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
             for (Task task: tasks) {

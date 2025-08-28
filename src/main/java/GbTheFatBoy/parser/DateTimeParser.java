@@ -9,6 +9,10 @@ import java.time.format.DateTimeParseException;
 
 import java.util.List;
 
+/**
+ * Utility class for parsing date and time strings in various formats.
+ * Supports multiple date and time formats and can parse combined date-time strings.
+ */
 public class DateTimeParser {
 
     // List of supported date formats
@@ -32,7 +36,14 @@ public class DateTimeParser {
             DateTimeFormatter.ofPattern("h a")             // 6 PM
     );
 
-
+    /**
+     * Parses a date-time string that may contain date only, date and time, or a full date-time format.
+     * If only date is provided, defaults time to 23:59.
+     *
+     * @param dateTimeStr The date-time string to parse.
+     * @return A LocalDateTime object representing the parsed date and time.
+     * @throws DateTimeParseException If the string cannot be parsed in any supported format.
+     */
     public static LocalDateTime parseDateTime(String dateTimeStr) throws DateTimeParseException {
         dateTimeStr = dateTimeStr.trim();
 
@@ -88,6 +99,13 @@ public class DateTimeParser {
         }
     }
 
+    /**
+     * Parses a date string in one of the supported date formats.
+     *
+     * @param dateStr The date string to parse.
+     * @return A LocalDate object representing the parsed date.
+     * @throws DateTimeParseException If the string cannot be parsed in any supported date format.
+     */
     public static LocalDate parseDate(String dateStr) throws DateTimeParseException {
         return parseDateHelper(dateStr.trim());
     }

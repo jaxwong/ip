@@ -19,12 +19,22 @@ import GbTheFatBoy.task.Event;
 
 import java.time.LocalDate;
 
+/**
+ * Main application class that coordinates all components of the task management system.
+ * Handles initialization, command processing, and the main application loop.
+ */
 public class GbTheFatBoy {
 
     private final Ui ui;
     private final Storage storage;
     private TaskList taskList;
 
+    /**
+     * Creates a new GbTheFatBoy application instance.
+     * Initializes UI, storage, and attempts to load existing tasks.
+     *
+     * @param dataFilePath The file path where tasks are stored.
+     */
     public GbTheFatBoy(String dataFilePath) {
         this.ui = new Ui();
         this.storage = new Storage(dataFilePath);
@@ -37,7 +47,10 @@ public class GbTheFatBoy {
         }
     }
 
-
+    /**
+     * Starts the main application loop.
+     * Continuously reads and processes user commands until exit command is received.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -62,6 +75,13 @@ public class GbTheFatBoy {
         }
     }
 
+    /**
+     * Executes a parsed command by delegating to the appropriate handler.
+     * Handles all command types and their specific error conditions.
+     *
+     * @param command The command to execute.
+     * @throws GBException If there's an error executing the command.
+     */
     private void executeCommand(Command command) throws GBException {
         switch (command.getType()) {
         case TODO -> {
@@ -176,6 +196,10 @@ public class GbTheFatBoy {
         }
     }
 
+    /**
+     * Saves the current task list to persistent storage.
+     * Displays an error message if saving fails.
+     */
     private void saveTasksToStorage() {
         try {
             storage.saveTasks(taskList.getTasks());
@@ -184,6 +208,12 @@ public class GbTheFatBoy {
         }
     }
 
+    /**
+     * Main entry point for the application.
+     * Creates and runs a new GbTheFatBoy instance with default data file path.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         new GbTheFatBoy("./data/Gbot.txt").run();
     }

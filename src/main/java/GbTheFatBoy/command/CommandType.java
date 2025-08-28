@@ -1,5 +1,9 @@
 package GbTheFatBoy.command;
 
+/**
+ * Enumeration of all supported command types in the application.
+ * Each enum value represents a different action the user can perform.
+ */
 public enum CommandType {
     TODO,
     DEADLINE,
@@ -11,6 +15,14 @@ public enum CommandType {
     FIND_DATE,
     BYE;
 
+    /**
+     * Converts a string input to the corresponding CommandType.
+     * Case-insensitive matching is performed.
+     *
+     * @param input The string representation of the command.
+     * @return The corresponding CommandType enum value.
+     * @throws IllegalArgumentException If the input doesn't match any known command.
+     */
     public static CommandType fromString(String input) {
         return switch(input.toLowerCase()) {
             case "todo" -> TODO;

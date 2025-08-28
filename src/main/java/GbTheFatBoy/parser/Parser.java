@@ -11,9 +11,20 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Utility class for parsing user input into various task objects and commands.
+ * Provides static methods to parse different types of tasks and extract command information.
+ */
 public class Parser {
 
-    // parse(String fullCommand);
+    /**
+     * Parses a full command string into a Command object.
+     * Extracts the command type and arguments from the input string.
+     *
+     * @param fullCommand The complete command string to parse.
+     * @return A Command object containing the parsed command type and arguments.
+     * @throws GBException If the command is empty or invalid.
+     */
     public static Command parse(String fullCommand) throws GBException {
         if (fullCommand.trim().isEmpty()) {
             throw new GBException("Invalid command: empty command");
@@ -29,7 +40,13 @@ public class Parser {
         }
     }
 
-    // parseTodo(String arguments);
+    /**
+     * Parses arguments into a Todo task.
+     *
+     * @param arguments The task description for the Todo.
+     * @return A Todo object with the specified description.
+     * @throws GBException If the description is empty.
+     */
     public static Todo parseTodo(String arguments) throws GBException {
         if (arguments.trim().isEmpty()) {
             throw new GBException("Invalid Todo: description cannot be empty!");
@@ -38,7 +55,14 @@ public class Parser {
         return new Todo(arguments);
     }
 
-    // parseDeadline(String arguments);
+    /**
+     * Parses arguments into a Deadline task.
+     * Expects format: "description /by date/time".
+     *
+     * @param arguments The arguments containing description and deadline information.
+     * @return A Deadline object with the parsed description and deadline.
+     * @throws GBException If the format is invalid, description/deadline is empty, or date format is invalid.
+     */
     public static Deadline parseDeadline(String arguments) throws GBException {
         if (!arguments.contains(" /by ")) {
             throw new GBException("Invalid deadline format");
@@ -60,7 +84,14 @@ public class Parser {
         }
     }
 
-    // parseEvent(String arguments)
+    /**
+     * Parses arguments into an Event task.
+     * Expects format: "description /from start_date/time /to end_date/time".
+     *
+     * @param arguments The arguments containing description, start date/time, and end date/time.
+     * @return An Event object with the parsed description and date/time range.
+     * @throws GBException If the format is invalid, any field is empty, dates are invalid, or end date is before start date.
+     */
     public static Event parseEvent(String arguments) throws GBException {
         if (!arguments.contains(" /from " ) || !arguments.contains(" /to ")) {
             throw new GBException("Invalid event format");
@@ -89,7 +120,13 @@ public class Parser {
         }
     }
 
-    // parseTaskIndex(String arguments)
+    /**
+     * Parses a string argument into a task index integer.
+     *
+     * @param arguments The string containing the task index.
+     * @return The parsed integer index.
+     * @throws GBException If the argument is empty or not a valid integer.
+     */
     public static int parseTaskIndex(String arguments) throws GBException {
         if (arguments.trim().isEmpty()) {
             throw new GBException("Index cannot be empty!");
@@ -102,7 +139,13 @@ public class Parser {
         }
     }
 
-    // parse
+    /**
+     * Parses a string argument into a LocalDate object.
+     *
+     * @param arguments The string containing the date to parse.
+     * @return A LocalDate object representing the parsed date.
+     * @throws GBException If the argument is empty or has an invalid date format.
+     */
     public static LocalDate parseDate(String arguments) throws GBException {
         if (arguments.trim().isEmpty()) {
             throw new GBException("Date cannot be empty");

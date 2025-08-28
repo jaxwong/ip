@@ -10,18 +10,36 @@ import java.time.LocalDate;
 
 import java.util.ArrayList;
 
+/**
+ * Manages a collection of tasks with operations for adding, retrieving, marking, and deleting tasks.
+ * Provides functionality to search for tasks by date.
+ */
 public class TaskList {
 
     private ArrayList<Task> taskList = new ArrayList<>();
 
+    /**
+     * Creates an empty TaskList.
+     */
     public TaskList() {
         this.taskList = new ArrayList<>();
     }
 
+    /**
+     * Creates a TaskList with the provided list of tasks.
+     *
+     * @param tasks The initial list of tasks.
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.taskList = tasks;
     }
 
+    /**
+     * Adds a task to the task list.
+     *
+     * @param task The task to add.
+     * @throws GBException If the task description is empty.
+     */
     public void add(Task task) throws GBException {
         if (task.getDescription().isEmpty()) {
             throw new GBException("Invalid description: task description cannot be " +
@@ -38,7 +56,13 @@ public class TaskList {
         return this.taskList.size();
     }
 
-    // helper that throws GBException instead of IndexOutOfBoundsException
+    /**
+     * Retrieves a task at the specified index (1-based indexing).
+     *
+     * @param index The 1-based index of the task to retrieve.
+     * @return The task at the specified index.
+     * @throws GBException If the index is out of bounds.
+     */
     public Task getTask(int index) throws GBException {
         try {
             return this.taskList.get(index - 1);
@@ -47,15 +71,33 @@ public class TaskList {
         }
     }
 
-    // exception handled by executeCommand
+    /**
+     * Marks a task as done at the specified index (1-based indexing).
+     *
+     * @param index The 1-based index of the task to mark.
+     * @throws GBException If the index is out of bounds.
+     */
     public void mark(int index) throws GBException {
         getTask(index).mark();
     }
 
+    /**
+     * Unmarks a task (sets as not done) at the specified index (1-based indexing).
+     *
+     * @param index The 1-based index of the task to unmark.
+     * @throws GBException If the index is out of bounds.
+     */
     public void unmark(int index) throws GBException {
         getTask(index).unmark();
     }
 
+    /**
+     * Deletes a task at the specified index (1-based indexing).
+     *
+     * @param index The 1-based index of the task to delete.
+     * @return The deleted task.
+     * @throws GBException If the index is invalid or out of bounds.
+     */
     public Task delete(int index) throws GBException {
         if (index < 1 || index > this.taskList.size()) {
             throw new GBException("Invalid task index");
@@ -63,6 +105,14 @@ public class TaskList {
         return this.taskList.remove(index - 1);
     }
 
+    /**
+     * Finds and returns all tasks that occur on the specified date.
+     * For Deadline tasks, matches if the deadline date equals the target date.
+     * For Event tasks, matches if the target date falls within the event's date range.
+     *
+     * @param targetDate The date to search for tasks.
+     * @return A list of tasks that occur on the specified date.
+     */
     public ArrayList<Task> findTasksByDate(LocalDate targetDate) {
         ArrayList<Task> tasksOnDate = new ArrayList<>();
 

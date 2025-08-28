@@ -3,6 +3,10 @@ package GbTheFatBoy.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a task that occurs over a specific time period.
+ * Extends Task to include start and end date/time functionality.
+ */
 public class Event extends Task {
 
     private final LocalDateTime startDateTime;
@@ -10,6 +14,13 @@ public class Event extends Task {
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern(
             "MMM dd yyyy, h:mma");
 
+    /**
+     * Creates a new Event task with description and date/time range.
+     *
+     * @param description The event description.
+     * @param startDate The start date and time of the event.
+     * @param endDate The end date and time of the event.
+     */
     public Event(String description, LocalDateTime startDate,
                  LocalDateTime endDate) {
         super(description);
@@ -17,6 +28,14 @@ public class Event extends Task {
         this.endDateTime = endDate;
     }
 
+    /**
+     * Creates a new Event task with description, completion status, and date/time range.
+     *
+     * @param desc The event description.
+     * @param isDone The completion status of the event.
+     * @param startDate The start date and time of the event.
+     * @param endDate The end date and time of the event.
+     */
     public Event(String desc, boolean isDone, LocalDateTime startDate,
                  LocalDateTime endDate) {
         super(desc, isDone);
