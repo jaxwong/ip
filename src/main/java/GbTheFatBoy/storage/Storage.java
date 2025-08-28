@@ -127,6 +127,12 @@ public class Storage {
         return "";
     }
 
+    /**
+     * Parses the task from the data file into the specific task object
+     *
+     * @param line the task string
+     * @return the actual specific task object
+     */
     private Task parseTask(String line) {
         try {
             if (line.isEmpty()) return null;
