@@ -98,6 +98,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Formats the provided task into a standard task format for interpretation by parser
+     *
+     * @param task The task object to format
+     * @return the formatted task string
+     */
     private String formatTask(Task task) {
         String isDone = task.isDone() ? "1" : "0";
 
