@@ -1,11 +1,12 @@
-package GbTheFatBoy.task;
+package gbthefatboy.task;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class TodoTest {   // must be public
+public class TodoTest { // must be public
     @Test
     public void testConstructorSetsDescription() {
         Todo todo = new Todo("Buy milk");

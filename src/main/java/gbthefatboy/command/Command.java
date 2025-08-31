@@ -1,4 +1,4 @@
-package GbTheFatBoy.command;
+package gbthefatboy.command;
 
 /**
  * Represents a parsed command with its type and associated arguments.
@@ -17,7 +17,7 @@ public class Command {
      */
     public Command(CommandType type, String arguments) {
         this.type = type;
-        this.arguments= arguments;
+        this.arguments = arguments;
     }
 
     public CommandType getType() {

@@ -1,18 +1,22 @@
-package GbTheFatBoy.storage;
-
-import GbTheFatBoy.exception.GBException;
-import GbTheFatBoy.task.Deadline;
-import GbTheFatBoy.task.Event;
-import GbTheFatBoy.task.Task;
-import GbTheFatBoy.task.Todo;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+package gbthefatboy.storage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import gbthefatboy.exception.GbException;
+import gbthefatboy.task.Deadline;
+import gbthefatboy.task.Event;
+import gbthefatboy.task.Task;
+import gbthefatboy.task.Todo;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaskListTest {
 
@@ -31,7 +35,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void testAddAndGetTasks() throws GBException {
+    public void testAddAndGetTasks() throws GbException {
         taskList.add(todo);
         taskList.add(deadline);
         taskList.add(event);
@@ -45,18 +49,18 @@ public class TaskListTest {
     @Test
     public void testAddEmptyDescriptionThrows() {
         Todo emptyTodo = new Todo("");
-        GBException exception = assertThrows(GBException.class, () -> taskList.add(emptyTodo));
+        GbException exception = assertThrows(GbException.class, () -> taskList.add(emptyTodo));
         assertEquals("Invalid description: task description cannot be empty!", exception.getMessage());
     }
 
     @Test
     public void testGetTaskInvalidIndexThrows() {
-        GBException exception = assertThrows(GBException.class, () -> taskList.getTask(1));
+        GbException exception = assertThrows(GbException.class, () -> taskList.getTask(1));
         assertTrue(exception.getMessage().contains("Index"));
     }
 
     @Test
-    public void testMarkAndUnmark() throws GBException {
+    public void testMarkAndUnmark() throws GbException {
         taskList.add(todo);
 
         taskList.mark(1);
@@ -67,7 +71,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void testDeleteTask() throws GBException {
+    public void testDeleteTask() throws GbException {
         taskList.add(todo);
         taskList.add(deadline);
 
@@ -79,12 +83,12 @@ public class TaskListTest {
 
     @Test
     public void testDeleteInvalidIndexThrows() {
-        GBException exception = assertThrows(GBException.class, () -> taskList.delete(1));
+        GbException exception = assertThrows(GbException.class, () -> taskList.delete(1));
         assertEquals("Invalid task index", exception.getMessage());
     }
 
     @Test
-    public void testFindTasksByDate() throws GBException {
+    public void testFindTasksByDate() throws GbException {
         taskList.add(todo);
         taskList.add(deadline);
         taskList.add(event);
@@ -99,7 +103,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void testFindTasksByDateNoTasks() throws GBException {
+    public void testFindTasksByDateNoTasks() throws GbException {
         taskList.add(todo);
         LocalDate target = LocalDate.of(2025, 8, 28);
 

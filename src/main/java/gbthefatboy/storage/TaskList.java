@@ -1,15 +1,12 @@
-package GbTheFatBoy.storage;
-
-import GbTheFatBoy.task.Task;
-import GbTheFatBoy.task.Todo;
-import GbTheFatBoy.task.Deadline;
-import GbTheFatBoy.task.Event;
-
-import GbTheFatBoy.exception.GBException;
+package gbthefatboy.storage;
 
 import java.time.LocalDate;
-
 import java.util.ArrayList;
+
+import gbthefatboy.exception.GbException;
+import gbthefatboy.task.Deadline;
+import gbthefatboy.task.Event;
+import gbthefatboy.task.Task;
 
 /**
  * Manages a collection of tasks with operations for adding, retrieving, marking, and deleting tasks.
@@ -39,12 +36,12 @@ public class TaskList {
      * Adds a task to the task list.
      *
      * @param task The task to add.
-     * @throws GBException If the task description is empty.
+     * @throws GbException If the task description is empty.
      */
-    public void add(Task task) throws GBException {
+    public void add(Task task) throws GbException {
         if (task.getDescription().isEmpty()) {
-            throw new GBException("Invalid description: task description cannot be " +
-                    "empty!");
+            throw new GbException("Invalid description: task description cannot be "
+                    + "empty!");
         }
         this.taskList.add(task);
     }
@@ -62,13 +59,13 @@ public class TaskList {
      *
      * @param index The 1-based index of the task to retrieve.
      * @return The task at the specified index.
-     * @throws GBException If the index is out of bounds.
+     * @throws GbException If the index is out of bounds.
      */
-    public Task getTask(int index) throws GBException {
+    public Task getTask(int index) throws GbException {
         try {
             return this.taskList.get(index - 1);
         } catch (IndexOutOfBoundsException e) {
-            throw new GBException(e.getMessage());
+            throw new GbException(e.getMessage());
         }
     }
 
@@ -76,9 +73,9 @@ public class TaskList {
      * Marks a task as done at the specified index (1-based indexing).
      *
      * @param index The 1-based index of the task to mark.
-     * @throws GBException If the index is out of bounds.
+     * @throws GbException If the index is out of bounds.
      */
-    public void mark(int index) throws GBException {
+    public void mark(int index) throws GbException {
         getTask(index).mark();
     }
 
@@ -86,9 +83,9 @@ public class TaskList {
      * Unmarks a task (sets as not done) at the specified index (1-based indexing).
      *
      * @param index The 1-based index of the task to unmark.
-     * @throws GBException If the index is out of bounds.
+     * @throws GbException If the index is out of bounds.
      */
-    public void unmark(int index) throws GBException {
+    public void unmark(int index) throws GbException {
         getTask(index).unmark();
     }
 
@@ -97,11 +94,11 @@ public class TaskList {
      *
      * @param index The 1-based index of the task to delete.
      * @return The deleted task.
-     * @throws GBException If the index is invalid or out of bounds.
+     * @throws GbException If the index is invalid or out of bounds.
      */
-    public Task delete(int index) throws GBException {
+    public Task delete(int index) throws GbException {
         if (index < 1 || index > this.taskList.size()) {
-            throw new GBException("Invalid task index");
+            throw new GbException("Invalid task index");
         }
         return this.taskList.remove(index - 1);
     }

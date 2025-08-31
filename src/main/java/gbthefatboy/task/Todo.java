@@ -1,4 +1,4 @@
-package GbTheFatBoy.task;
+package gbthefatboy.task;
 
 /**
  * Represents a simple todo task without any date/time constraints.
