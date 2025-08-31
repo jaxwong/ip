@@ -1,9 +1,9 @@
-package GbTheFatBoy.task;
-
-import org.junit.jupiter.api.Test;
+package gbthefatboy.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

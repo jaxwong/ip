@@ -1,4 +1,4 @@
-package GbTheFatBoy.command;
+package gbthefatboy.command;
 
 /**
  * Enumeration of all supported command types in the application.
@@ -26,17 +26,17 @@ public enum CommandType {
      */
     public static CommandType fromString(String input) {
         return switch(input.toLowerCase()) {
-            case "todo" -> TODO;
-            case "deadline" -> DEADLINE;
-            case "event" -> EVENT;
-            case "list" -> LIST;
-            case "mark" -> MARK;
-            case "unmark" -> UNMARK;
-            case "delete" -> DELETE;
-            case "find-date" -> FIND_DATE;
-            case "find" -> FIND;
-            case "bye" -> BYE;
-            default -> throw new IllegalArgumentException("Unknown command " + input);
+        case "todo" -> TODO;
+        case "deadline" -> DEADLINE;
+        case "event" -> EVENT;
+        case "list" -> LIST;
+        case "mark" -> MARK;
+        case "unmark" -> UNMARK;
+        case "delete" -> DELETE;
+        case "find-date" -> FIND_DATE;
+        case "find" -> FIND;
+        case "bye" -> BYE;
+        default -> throw new IllegalArgumentException("Unknown command " + input);
         };
     }
 }

@@ -1,15 +1,15 @@
-package GbTheFatBoy.task;
-
-import org.junit.jupiter.api.Test;
+package gbthefatboy.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class DeadlineTest {   // must be public
+public class DeadlineTest { // must be public
     @Test
     public void testConstructorSetsDescriptionAndDeadline() {
         LocalDateTime dt = LocalDateTime.of(2025, 8, 28, 15, 30);

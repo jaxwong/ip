@@ -1,4 +1,4 @@
-package GbTheFatBoy.task;
+package gbthefatboy.task;
 
 /**
  * Represents a basic task with a description and completion status.

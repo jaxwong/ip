@@ -1,4 +1,4 @@
-package GbTheFatBoy.task;
+package gbthefatboy.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,10 +9,11 @@ import java.time.format.DateTimeFormatter;
  */
 public class Event extends Task {
 
-    private final LocalDateTime startDateTime;
-    private final LocalDateTime endDateTime;
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern(
             "MMM dd yyyy, h:mma");
+    private final LocalDateTime startDateTime;
+    private final LocalDateTime endDateTime;
+
 
     /**
      * Creates a new Event task with description and date/time range.

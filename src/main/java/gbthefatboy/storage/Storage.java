@@ -1,22 +1,23 @@
-package GbTheFatBoy.storage;
+package gbthefatboy.storage;
 
-import GbTheFatBoy.task.Task;
-import GbTheFatBoy.task.Todo;
-import GbTheFatBoy.task.Deadline;
-import GbTheFatBoy.task.Event;
-
-import GbTheFatBoy.exception.GBException;
-
-import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
+
+import gbthefatboy.exception.GbException;
+import gbthefatboy.task.Deadline;
+import gbthefatboy.task.Event;
+import gbthefatboy.task.Task;
+import gbthefatboy.task.Todo;
 
 /**
  * Handles file-based storage and retrieval of tasks.
@@ -57,9 +58,9 @@ public class Storage {
      * If the file doesn't exist, returns an empty task list.
      *
      * @return An ArrayList containing all loaded tasks.
-     * @throws GBException If there's an error reading from the file.
+     * @throws GbException If there's an error reading from the file.
      */
-    public ArrayList<Task> loadTasks() throws GBException {
+    public ArrayList<Task> loadTasks() throws GbException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
 
@@ -68,7 +69,7 @@ public class Storage {
             return tasks;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Task task = parseTask(line);
@@ -78,7 +79,7 @@ public class Storage {
             }
             System.out.println("Loaded " + tasks.size() + " tasks from storage");
         } catch (IOException e) {
-            throw new GBException("Error reading from file: " + e.getMessage());
+            throw new GbException("Error reading from file: " + e.getMessage());
         }
 
         return tasks;
@@ -89,16 +90,16 @@ public class Storage {
      * Overwrites the existing file content.
      *
      * @param tasks The list of tasks to save.
-     * @throws GBException If there's an error writing to the file.
+     * @throws GbException If there's an error writing to the file.
      */
-    public void saveTasks(ArrayList<Task> tasks) throws GBException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
+    public void saveTasks(ArrayList<Task> tasks) throws GbException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Task task: tasks) {
                 writer.write(formatTask(task));
                 writer.newLine();
             }
         } catch (IOException e) {
-            throw new GBException("Error writing to file: " + e.getMessage());
+            throw new GbException("Error writing to file: " + e.getMessage());
         }
     }
 
@@ -135,7 +136,9 @@ public class Storage {
      */
     private Task parseTask(String line) {
         try {
-            if (line.isEmpty()) return null;
+            if (line.isEmpty()) {
+                return null;
+            }
             String[] parts = line.split(" \\| ");
 
             if (parts.length < 3) {
@@ -172,8 +175,10 @@ public class Storage {
                     String startDateStr = parts[3].trim();
                     String endDateStr = parts[4].trim();
                     try {
-                        LocalDateTime startDateTime = LocalDateTime.parse(startDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-                        LocalDateTime endDateTime = LocalDateTime.parse(endDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        LocalDateTime startDateTime = LocalDateTime.parse(startDateStr,
+                                DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                        LocalDateTime endDateTime = LocalDateTime.parse(endDateStr,
+                                DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                         task = new Event(description, isDone, startDateTime,
                                 endDateTime);
                     } catch (Exception e) {

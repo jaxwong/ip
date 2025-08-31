@@ -1,4 +1,4 @@
-package GbTheFatBoy.task;
+package gbthefatboy.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,9 +9,10 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
 
-    private final LocalDateTime deadline;
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern(
             "MMM dd yyyy, h:mma");
+    private final LocalDateTime deadline;
+
 
     /**
      * Creates a new Deadline task with the specified description and deadline.

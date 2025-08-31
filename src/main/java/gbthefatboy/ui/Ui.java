@@ -1,20 +1,18 @@
-package GbTheFatBoy.ui;
-
-import GbTheFatBoy.task.Task;
-
-import java.util.Scanner;
-
-import java.util.ArrayList;
+package gbthefatboy.ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import gbthefatboy.task.Task;
 
 /**
  * Handles all user interface interactions including input/output operations.
  * Manages display of messages, prompts, and formatted output to the console.
  */
 public class Ui {
-    private static final String NAME = "GbTheFatBoy";
+    private static final String NAME = "gbthefatboy";
     private static final String MESSAGE = "I'm smelly meow meow!";
     private static final String LINE = "_".repeat(60);
 

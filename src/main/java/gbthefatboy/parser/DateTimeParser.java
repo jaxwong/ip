@@ -1,12 +1,10 @@
-package GbTheFatBoy.parser;
+package gbthefatboy.parser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
 import java.util.List;
 
 /**
@@ -17,23 +15,23 @@ public class DateTimeParser {
 
     // List of supported date formats
     private static final List<DateTimeFormatter> DATE_FORMATS = List.of(
-            DateTimeFormatter.ofPattern("yyyy-MM-dd"),      // 2019-12-02
-            DateTimeFormatter.ofPattern("dd/MM/yyyy"),      // 02/12/2019
-            DateTimeFormatter.ofPattern("d/M/yyyy"),        // 2/12/2019
-            DateTimeFormatter.ofPattern("MM/dd/yyyy"),      // 12/02/2019
-            DateTimeFormatter.ofPattern("M/d/yyyy"),        // 12/2/2019
-            DateTimeFormatter.ofPattern("yyyy/MM/dd"),      // 2019/12/02
-            DateTimeFormatter.ofPattern("yyyy/M/d")         // 2019/12/2
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"), // 2019-12-02
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"), // 02/12/2019
+            DateTimeFormatter.ofPattern("d/M/yyyy"), // 2/12/2019
+            DateTimeFormatter.ofPattern("MM/dd/yyyy"), // 12/02/2019
+            DateTimeFormatter.ofPattern("M/d/yyyy"), // 12/2/2019
+            DateTimeFormatter.ofPattern("yyyy/MM/dd"), // 2019/12/02
+            DateTimeFormatter.ofPattern("yyyy/M/d") // 2019/12/2
     );
 
     // List of supported time formats
     private static final List<DateTimeFormatter> TIME_FORMATS = List.of(
-            DateTimeFormatter.ofPattern("HHmm"),           // 1800
-            DateTimeFormatter.ofPattern("HH:mm"),          // 18:00
-            DateTimeFormatter.ofPattern("h:mma"),          // 6:00PM
-            DateTimeFormatter.ofPattern("h:mm a"),         // 6:00 PM
-            DateTimeFormatter.ofPattern("ha"),             // 6PM
-            DateTimeFormatter.ofPattern("h a")             // 6 PM
+            DateTimeFormatter.ofPattern("HHmm"), // 1800
+            DateTimeFormatter.ofPattern("HH:mm"), // 18:00
+            DateTimeFormatter.ofPattern("h:mma"), // 6:00PM
+            DateTimeFormatter.ofPattern("h:mm a"), // 6:00 PM
+            DateTimeFormatter.ofPattern("ha"), // 6PM
+            DateTimeFormatter.ofPattern("h a") // 6 PM
     );
 
     /**
