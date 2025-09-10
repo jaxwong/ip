@@ -291,9 +291,8 @@ public class GbTheFatBoy {
                                 + "Tag format: tag <itemNumber> <tagMessage>\n"
                                 + "Example: tag 2 #fun";
                     } else if (e.getMessage().startsWith("Index")) {
-                        return e.getMessage() + "\n"
-                                + "Please enter an itemNumber from 1 to " + taskList.getSize() + 1
-                                + "Example: tag 2 #work";
+                        return "Please enter an itemNumber from 1 to " + (taskList.getSize() + 1)
+                                + "\nExample: tag 1 #work";
                     }
                     return "Tagging failed: " + e.getMessage();
                 }
