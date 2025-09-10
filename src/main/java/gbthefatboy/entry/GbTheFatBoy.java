@@ -251,10 +251,11 @@ public class GbTheFatBoy {
                 }
                 return response.toString().trim();
             } catch (GbException e) {
-                if (e.getMessage().startsWith("Invalid date format") || e.getMessage().startsWith("Date cannot be empty")) {
-                    return e.getMessage() + "\n" +
-                            "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n" +
-                            "Example: find-date 2019-12-02";
+                if (e.getMessage().startsWith("Invalid date format")
+                        || e.getMessage().startsWith("Date cannot be empty")) {
+                    return e.getMessage() + "\n"
+                            + "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n"
+                            + "Example: find-date 2019-12-02";
                 }
                 throw e;
             }
