@@ -1,8 +1,10 @@
 package gbthefatboy.entry;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import gbthefatboy.command.Command;
+import gbthefatboy.command.Tag;
 import gbthefatboy.exception.GbException;
 import gbthefatboy.parser.Parser;
 import gbthefatboy.storage.Storage;
@@ -106,178 +108,202 @@ public class GbTheFatBoy {
      */
     private String executeCommandForGui(Command command) throws GbException {
         switch (command.getType()) {
-        case TODO -> {
-            try {
-                Todo todo = Parser.parseTodo(command.getArguments());
-                taskList.add(todo);
-                return String.format("Got it. I've added this task:\n  %s\nNow you have %d tasks in the list.",
-                        todo, taskList.getSize());
-            } catch (GbException e) {
-                if (e.getMessage().startsWith("Invalid Todo")) {
-                    return "Task description cannot be empty!\n"
-                            + "Input todo in format: todo <task>\n"
-                            + "Example:\n"
-                            + "todo borrow book";
-                }
-                throw e;
-            }
-        }
-        case DEADLINE -> {
-            try {
-                Deadline deadline = Parser.parseDeadline(command.getArguments());
-                taskList.add(deadline);
-                return String.format("Got it. I've added this task:\n  %s\nNow you have %d tasks in the list.",
-                        deadline, taskList.getSize());
-            } catch (GbException e) {
-                if (e.getMessage().equals("Invalid deadline format")) {
-                    return "Input deadline in below format:\n"
-                            + "deadline <task> /by <date> [time]\n"
-                            + "Examples:\n"
-                            + "deadline return book /by 2019-12-02\n"
-                            + "deadline submit report /by 2/12/2019 1800\n"
-                            + "deadline meeting /by 15/10/2019 2:30PM";
-                } else if (e.getMessage().equals("Task description and deadline cannot be empty")) {
-                    return "Task description and deadline cannot be empty!";
-                } else if (e.getMessage().startsWith("Invalid date/time format")) {
-                    return "Invalid date/time format: " + command.getArguments() + "\n"
-                            + "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n"
-                            + "Time formats: HHmm, HH:mm, h:mma, ha (optional)";
-                } else {
+            case TODO -> {
+                try {
+                    Todo todo = Parser.parseTodo(command.getArguments());
+                    taskList.add(todo);
+                    return String.format("Got it. I've added this task:\n  %s\nNow you have %d tasks in the list.",
+                            todo, taskList.getSize());
+                } catch (GbException e) {
+                    if (e.getMessage().startsWith("Invalid Todo")) {
+                        return "Task description cannot be empty!\n"
+                                + "Input todo in format: todo <task>\n"
+                                + "Example:\n"
+                                + "todo borrow book";
+                    }
                     throw e;
                 }
             }
-        }
-        case EVENT -> {
-            try {
-                Event event = Parser.parseEvent(command.getArguments());
-                taskList.add(event);
-                return String.format("Got it. I've added this task:\n  %s\nNow you have %d tasks in the list.",
-                        event, taskList.getSize());
-            } catch (GbException e) {
-                if (e.getMessage().equals("Invalid event format")) {
-                    return "Input event in the below format:\n"
-                            + "event <event name> /from <start date-time> /to <end date-time>\n"
-                            + "Examples:\n"
-                            + "event project meeting /from 2019-10-15 1400 /to 2019-10-15 1600\n"
-                            + "event conference /from 15/10/2019 2:00PM /to 17/10/2019 5:00PM";
-                } else if (e.getMessage().equals("Event description and dates cannot be empty")) {
-                    return "Event description and dates cannot be empty!";
-                } else if (e.getMessage().equals("End date/time cannot be before start date/time")) {
-                    return "End date/time cannot be before start date/time!";
-                } else if (e.getMessage().startsWith("Invalid date/time format")) {
-                    return "Invalid date/time format: " + command.getArguments() + "\n"
-                            + "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n"
-                            + "Time formats: HHmm, HH:mm, h:mma, ha (optional)";
-                } else {
+            case DEADLINE -> {
+                try {
+                    Deadline deadline = Parser.parseDeadline(command.getArguments());
+                    taskList.add(deadline);
+                    return String.format("Got it. I've added this task:\n  %s\nNow you have %d tasks in the list.",
+                            deadline, taskList.getSize());
+                } catch (GbException e) {
+                    if (e.getMessage().equals("Invalid deadline format")) {
+                        return "Input deadline in below format:\n"
+                                + "deadline <task> /by <date> [time]\n"
+                                + "Examples:\n"
+                                + "deadline return book /by 2019-12-02\n"
+                                + "deadline submit report /by 2/12/2019 1800\n"
+                                + "deadline meeting /by 15/10/2019 2:30PM";
+                    } else if (e.getMessage().equals("Task description and deadline cannot be empty")) {
+                        return "Task description and deadline cannot be empty!";
+                    } else if (e.getMessage().startsWith("Invalid date/time format")) {
+                        return "Invalid date/time format: " + command.getArguments() + "\n"
+                                + "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n"
+                                + "Time formats: HHmm, HH:mm, h:mma, ha (optional)";
+                    } else {
+                        throw e;
+                    }
+                }
+            }
+            case EVENT -> {
+                try {
+                    Event event = Parser.parseEvent(command.getArguments());
+                    taskList.add(event);
+                    return String.format("Got it. I've added this task:\n  %s\nNow you have %d tasks in the list.",
+                            event, taskList.getSize());
+                } catch (GbException e) {
+                    if (e.getMessage().equals("Invalid event format")) {
+                        return "Input event in the below format:\n"
+                                + "event <event name> /from <start date-time> /to <end date-time>\n"
+                                + "Examples:\n"
+                                + "event project meeting /from 2019-10-15 1400 /to 2019-10-15 1600\n"
+                                + "event conference /from 15/10/2019 2:00PM /to 17/10/2019 5:00PM";
+                    } else if (e.getMessage().equals("Event description and dates cannot be empty")) {
+                        return "Event description and dates cannot be empty!";
+                    } else if (e.getMessage().equals("End date/time cannot be before start date/time")) {
+                        return "End date/time cannot be before start date/time!";
+                    } else if (e.getMessage().startsWith("Invalid date/time format")) {
+                        return "Invalid date/time format: " + command.getArguments() + "\n"
+                                + "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n"
+                                + "Time formats: HHmm, HH:mm, h:mma, ha (optional)";
+                    } else {
+                        throw e;
+                    }
+                }
+            }
+            case LIST -> {
+                if (taskList.getTasks().isEmpty()) {
+                    return "You have no tasks in your list.";
+                }
+                StringBuilder response = new StringBuilder("Here are the tasks in your list:\n");
+                for (int i = 0; i < taskList.getTasks().size(); i++) {
+                    response.append(String.format("%d. %s\n", i + 1, taskList.getTasks().get(i)));
+                }
+                return response.toString().trim();
+            }
+            case MARK -> {
+                try {
+                    int index = Parser.parseTaskIndex(command.getArguments());
+                    taskList.mark(index);
+                    Task task = taskList.getTask(index);
+                    return String.format("Nice! I've marked this task as done:\n  %s", task);
+                } catch (GbException e) {
+                    if (e.getMessage().equals("Invalid task index")) {
+                        if (taskList.getSize() == 0) {
+                            return "Invalid index!\nThere are no tasks in your list!";
+                        } else {
+                            return String.format("Invalid index!\nPlease enter a number from 1 to %d", taskList.getSize());
+                        }
+                    } else {
+                        return "Invalid number format for task index.\nEnter a whole number please";
+                    }
+                }
+            }
+            case UNMARK -> {
+                try {
+                    int index = Parser.parseTaskIndex(command.getArguments());
+                    taskList.unmark(index);
+                    Task task = taskList.getTask(index);
+                    return String.format("OK, I've marked this task as not done yet:\n  %s", task);
+                } catch (GbException e) {
+                    if (e.getMessage().equals("Invalid task index")) {
+                        if (taskList.getSize() == 0) {
+                            return "Invalid index!\nThere are no tasks in your list!";
+                        } else {
+                            return String.format("Invalid index!\nPlease enter a number from 1 to %d", taskList.getSize());
+                        }
+                    } else {
+                        return "Invalid number format for task index.\nEnter a whole number please";
+                    }
+                }
+            }
+            case DELETE -> {
+                try {
+                    int index = Parser.parseTaskIndex(command.getArguments());
+                    Task deletedTask = taskList.delete(index);
+                    return String.format("Noted. I've removed this task:\n  %s\nNow you have %d tasks in the list.",
+                            deletedTask, taskList.getSize());
+                } catch (GbException e) {
+                    if (e.getMessage().equals("Invalid task index")) {
+                        if (taskList.getSize() == 0) {
+                            return "Invalid index!\nThere are no tasks in your list!";
+                        } else {
+                            return String.format("Invalid index!\nPlease enter a number from 1 to %d", taskList.getSize());
+                        }
+                    } else {
+                        return "Invalid number format for task index.\nEnter a whole number please";
+                    }
+                }
+            }
+            case FIND_DATE -> {
+                try {
+                    LocalDate targetDate = Parser.parseDate(command.getArguments());
+                    var tasks = taskList.findTasksByDate(targetDate);
+                    if (tasks.isEmpty()) {
+                        return String.format("No tasks found on %s.", targetDate);
+                    }
+                    StringBuilder response = new StringBuilder(String.format("Tasks on %s:\n",
+                            targetDate.format(java.time.format.DateTimeFormatter.ofPattern("MMM dd yyyy"))));
+                    for (int i = 0; i < tasks.size(); i++) {
+                        response.append(String.format("%d. %s\n", i + 1, tasks.get(i)));
+                    }
+                    return response.toString().trim();
+                } catch (GbException e) {
+                    if (e.getMessage().startsWith("Invalid date format")
+                            || e.getMessage().startsWith("Date cannot be empty")) {
+                        return e.getMessage() + "\n"
+                                + "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n"
+                                + "Example: find-date 2019-12-02";
+                    }
                     throw e;
                 }
             }
-        }
-        case LIST -> {
-            if (taskList.getTasks().isEmpty()) {
-                return "You have no tasks in your list.";
-            }
-            StringBuilder response = new StringBuilder("Here are the tasks in your list:\n");
-            for (int i = 0; i < taskList.getTasks().size(); i++) {
-                response.append(String.format("%d. %s\n", i + 1, taskList.getTasks().get(i)));
-            }
-            return response.toString().trim();
-        }
-        case MARK -> {
-            try {
-                int index = Parser.parseTaskIndex(command.getArguments());
-                taskList.mark(index);
-                Task task = taskList.getTask(index);
-                return String.format("Nice! I've marked this task as done:\n  %s", task);
-            } catch (GbException e) {
-                if (e.getMessage().equals("Invalid task index")) {
-                    if (taskList.getSize() == 0) {
-                        return "Invalid index!\nThere are no tasks in your list!";
-                    } else {
-                        return String.format("Invalid index!\nPlease enter a number from 1 to %d", taskList.getSize());
-                    }
-                } else {
-                    return "Invalid number format for task index.\nEnter a whole number please";
-                }
-            }
-        }
-        case UNMARK -> {
-            try {
-                int index = Parser.parseTaskIndex(command.getArguments());
-                taskList.unmark(index);
-                Task task = taskList.getTask(index);
-                return String.format("OK, I've marked this task as not done yet:\n  %s", task);
-            } catch (GbException e) {
-                if (e.getMessage().equals("Invalid task index")) {
-                    if (taskList.getSize() == 0) {
-                        return "Invalid index!\nThere are no tasks in your list!";
-                    } else {
-                        return String.format("Invalid index!\nPlease enter a number from 1 to %d", taskList.getSize());
-                    }
-                } else {
-                    return "Invalid number format for task index.\nEnter a whole number please";
-                }
-            }
-        }
-        case DELETE -> {
-            try {
-                int index = Parser.parseTaskIndex(command.getArguments());
-                Task deletedTask = taskList.delete(index);
-                return String.format("Noted. I've removed this task:\n  %s\nNow you have %d tasks in the list.",
-                        deletedTask, taskList.getSize());
-            } catch (GbException e) {
-                if (e.getMessage().equals("Invalid task index")) {
-                    if (taskList.getSize() == 0) {
-                        return "Invalid index!\nThere are no tasks in your list!";
-                    } else {
-                        return String.format("Invalid index!\nPlease enter a number from 1 to %d", taskList.getSize());
-                    }
-                } else {
-                    return "Invalid number format for task index.\nEnter a whole number please";
-                }
-            }
-        }
-        case FIND_DATE -> {
-            try {
-                LocalDate targetDate = Parser.parseDate(command.getArguments());
-                var tasks = taskList.findTasksByDate(targetDate);
+            case FIND -> {
+                String keyword = command.getArguments();
+                ArrayList<Task> tasks = taskList.findTasksByKeyword(keyword);
                 if (tasks.isEmpty()) {
-                    return String.format("No tasks found on %s.", targetDate);
+                    return "No tasks found on this date.";
                 }
-                StringBuilder response = new StringBuilder(String.format("Tasks on %s:\n",
-                        targetDate.format(java.time.format.DateTimeFormatter.ofPattern("MMM dd yyyy"))));
+                StringBuilder response = new StringBuilder("Here are the matching tasks in your list:\n");
                 for (int i = 0; i < tasks.size(); i++) {
                     response.append(String.format("%d. %s\n", i + 1, tasks.get(i)));
                 }
                 return response.toString().trim();
-            } catch (GbException e) {
-                if (e.getMessage().startsWith("Invalid date format")
-                        || e.getMessage().startsWith("Date cannot be empty")) {
-                    return e.getMessage() + "\n"
-                            + "Supported formats: yyyy-MM-dd, dd/MM/yyyy, MM/dd/yyyy\n"
-                            + "Example: find-date 2019-12-02";
+            }
+            case TAG -> {
+                String tagIndexAndDesc = command.getArguments();
+                try {
+                    Tag tagObj = Parser.parseTag(tagIndexAndDesc);
+                    int index = tagObj.getIndex();
+                    String tagMessage = tagObj.getTagMessage();
+
+                    Task target = taskList.getTask(index);
+                    target.setDescription(target.getDescription() + " " + tagMessage);
+                    return String.format("Got it. I've tagged this task:\n  %s", target);
+                } catch (GbException e) {
+                    if (e.getMessage().startsWith("Invalid index")
+                            || e.getMessage().startsWith("tag index and message")) {
+                        return e.getMessage() + "\n"
+                                + "Tag format: tag <itemNumber> <tagMessage>\n"
+                                + "Example: tag 2 #fun";
+                    } else if (e.getMessage().startsWith("Index")) {
+                        return e.getMessage() + "\n"
+                                + "Please enter an itemNumber from 1 to " + taskList.getSize() + 1
+                                + "Example: tag 2 #work";
+                    }
+                    return "Tagging failed: " + e.getMessage();
                 }
-                throw e;
             }
-        }
-        case FIND -> {
-            String keyword = command.getArguments();
-            var tasks = taskList.findTasksByKeyword(keyword);
-            if (tasks.isEmpty()) {
-                return "No tasks found on this date.";
+            case BYE -> {
+                return "Bye. Hope to see you again soon!";
             }
-            StringBuilder response = new StringBuilder("Here are the matching tasks in your list:\n");
-            for (int i = 0; i < tasks.size(); i++) {
-                response.append(String.format("%d. %s\n", i + 1, tasks.get(i)));
+            default -> {
+                return "Unknown command: " + command.getType();
             }
-            return response.toString().trim();
-        }
-        case BYE -> {
-            return "Bye. Hope to see you again soon!";
-        }
-        default -> {
-            return "Unknown command: " + command.getType();
-        }
         }
     }
 
