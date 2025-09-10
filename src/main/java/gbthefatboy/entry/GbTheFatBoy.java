@@ -429,8 +429,9 @@ public class GbTheFatBoy {
     }
 
     /**
-     * Main entry point for the application.
-     * Creates and runs a new GbTheFatBoy instance with default data file path.
+     * No longer the main entry point for the app with the implementation of JavaFx
+     * The main entry point is now through Launcher.main.
+     * This method is never called.
      *
      * @param args Command line arguments (not used).
      */
