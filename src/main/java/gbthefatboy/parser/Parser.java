@@ -18,6 +18,22 @@ import gbthefatboy.task.Todo;
  */
 public class Parser {
 
+    /*
+    * Helper function to assert that a string is not empty, that throws GbException
+    * Throws GbException for consistent error handling
+    *
+    * @param String str     The string object to check emptiness of.
+    * @param String message The message to accompany GbException.
+    * @throws GbException   If the command is empty.
+    * */
+    private static void assertNotEmpty(String str, String message) throws GbException {
+        try {
+            assert str != null && !str.trim().isEmpty() : message;
+        } catch (AssertionError e) {
+            throw new GbException("Internal error: " + message);
+        }
+    }
+
     /**
      * Parses a full command string into a Command object.
      * Extracts the command type and arguments from the input string.
@@ -32,6 +48,7 @@ public class Parser {
         }
 
         String[] parts = fullCommand.trim().split(" ", 2);
+        assertNotEmpty(parts[0], "Command shouldn't be empty!");
         try {
             CommandType command = CommandType.fromString(parts[0]);
             String arguments = parts.length > 1 ? parts[1] : " ";
