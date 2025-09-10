@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 
 import gbthefatboy.command.Command;
 import gbthefatboy.command.CommandType;
+import gbthefatboy.command.Tag;
 import gbthefatboy.exception.GbException;
 import gbthefatboy.task.Deadline;
 import gbthefatboy.task.Event;
@@ -155,6 +156,20 @@ public class Parser {
             return Integer.parseInt(arguments.trim());
         } catch (NumberFormatException e) {
             throw new GbException("Invalid index: index must be a whole number!");
+        }
+    }
+
+    public static Tag parseTag(String arguments) throws GbException {
+        if (arguments.trim().isEmpty()) {
+            throw new GbException("tag index and message cannot be empty!");
+        }
+
+        try {
+            String[] parts = arguments.split(" ");
+            int index = Integer.parseInt(parts[0]);
+            return new Tag(index, parts[1]);
+        } catch (NumberFormatException e) {
+            throw new GbException("Invalid index. Index must be a whole number!");
         }
     }
 
