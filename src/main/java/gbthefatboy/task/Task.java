@@ -6,7 +6,7 @@ package gbthefatboy.task;
  */
 public class Task {
 
-    private final String description;
+    private String description;
     private boolean isDone = false;
 
     /**
@@ -50,6 +50,10 @@ public class Task {
 
     public String getDescription() {
         return this.description;
+    }
+
+    public void setDescription(String newDesc) {
+        this.description = newDesc;
     }
 
     @Override
