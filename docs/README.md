@@ -77,33 +77,35 @@ Create a simple task without any time constraints:
 
 Format: `todo TASK`
 Examples:
-   - `todo Buy groceries`
-   - `todo read book`
 
+- `todo Buy groceries`
+- `todo read book`
 
 #### Deadline Tasks
 
 Create a task with a specific deadline:
 
 Format: `deadline TASK /by DATE`
-   -  `DATE` is supported in several formats as shown [here](#date-formats)
+
+- `DATE` is supported in several formats as shown [here](#date-formats)
 
 Examples:
-   - `deadline Submit assignment /by 2024-12-25 23:59`
-   - `deadline Finish project /by 25/12/2024 6:00PM`
 
+- `deadline Submit assignment /by 2024-12-25 23:59`
+- `deadline Finish project /by 25/12/2024 6:00PM`
 
 #### Event Tasks
 
 Create a task that spans a specific time period:
 
 Format: `event TASK /from DATE /to DATE`
-   -  `DATE` is supported in several formats as shown [here](#date-formats)
 
+- `DATE` is supported in several formats as shown [here](#date-formats)
 
 Examples:
-   - `event Team meeting /from 2024-12-20 2:00PM /to 2024-12-20 4:00PM`
-   - `event Conference /from 20/12/2024 9:00AM /to 22/12/2024 5:00PM`
+
+- `event Team meeting /from 2024-12-20 2:00PM /to 2024-12-20 4:00PM`
+- `event Conference /from 20/12/2024 9:00AM /to 22/12/2024 5:00PM`
 
 ### Managing Tasks
 
@@ -116,21 +118,24 @@ Format: `list`
 Format: `mark TASK_NUMBER`
 
 Examples:
-   - `mark 1`
+
+- `mark 1`
 
 #### Mark Task as Incomplete
 
 Format: `unmark TASK_NUMBER`
 
-Example: 
-   - `unmark 2`
+Example:
+
+- `unmark 2`
 
 #### Delete a Task
 
 Format: `delete TASK_NUMBER`
 
-Example: 
-   - `delete 1`
+Example:
+
+- `delete 1`
 
 ### Searching Tasks
 
@@ -139,26 +144,28 @@ Example:
 Format: `find KEYWORD`
 
 Example:
-   - `find meeting`
-   - `find book`
+
+- `find meeting`
+- `find book`
 
 #### Find by Date
 
 Format: `find-date DATE`
 
-Example: 
-   - `find-date 2024-12-25`
-   - `find-date 12-09-2025`
+Example:
+
+- `find-date 2024-12-25`
+- `find-date 12-09-2025`
 
 ### Tagging Tasks
-
 
 Add tags to tasks for better organization
 
 Format: `tag TASK_NUMBER TAG_MESSAGE`
 
 Example:
-   - `tag 1 urgent`
+
+- `tag 1 urgent`
 
 ### Exiting the Application
 
